@@ -1,0 +1,51 @@
+<ion-header>
+  <ion-toolbar>
+    <!-- Botón de flecha para volver a la página de inicio (home) -->
+    <ion-buttons slot="start">
+      <ion-button [routerLink]="['/home']">
+        <ion-icon slot="icon-only" name="arrow-back-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <!-- Título que muestra o indica el nombre de la página -->
+    <ion-title>Gestión de Citas</ion-title>
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+  <!-- Formulario para agregar una cita -->
+  <ion-item>
+    <!-- Etiqueta y input que muestra un campo para ingresar el texto de la cita -->
+    <ion-label position="floating">Cita</ion-label>
+    <ion-input [(ngModel)]="nuevaCita.texto" name="texto" required></ion-input>
+  </ion-item>
+  <!-- Mensaje que debera mostrarse al momento de ver que la cita tiene menos de 5 caracteres -->
+  <ion-item *ngIf="nuevaCita.texto && nuevaCita.texto.length < 5">
+    <ion-text color="danger">La cita a ingresar debe tener al menos 5 caracteres.</ion-text>
+  </ion-item>
+  <!-- Etiqueta y input que muestra un campo para ingresar el nombre del autor -->
+  <ion-item>
+    <ion-label position="floating">Autor</ion-label>
+    <ion-input [(ngModel)]="nuevaCita.autor" name="autor" required></ion-input>
+  </ion-item>
+  <!-- Mensaje que debera mostrarse al momento de ver que el nombre del autor tiene menos de 2 caracteres -->
+  <ion-item *ngIf="nuevaCita.autor && nuevaCita.autor.length < 2">
+    <ion-text color="danger">El nombre del autor a ingresar debe tener al menos 2 caracteres.</ion-text>
+  </ion-item>
+  <!-- Botón que permite agregar la cita -->
+  <ion-button expand="full" (click)="agregarCita()">Agregar Cita</ion-button>
+  <!-- Lista de citas -->
+  <ion-list>
+    <ion-item-divider>Mis Citas</ion-item-divider>
+    <!-- Un recorrido de todas las citas ingresada -->
+    <ion-item *ngFor="let cita of citas">
+      <!-- Se muestra el texto y el nombre del autor de la cita -->
+      <ion-label>
+        <h2>{{ cita.texto }}</h2>
+        <p>{{ cita.autor }}</p>
+      </ion-label>
+      <!-- Botón que permite eliminar la cita agregada -->
+      <ion-button (click)="eliminarCita(cita)" color="primary">
+        <ion-icon slot="icon-only" name="trash"></ion-icon>
+      </ion-button>
+    </ion-item>
+  </ion-list>
+</ion-content>
